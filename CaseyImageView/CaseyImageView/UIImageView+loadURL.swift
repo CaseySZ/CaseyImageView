@@ -1,6 +1,6 @@
 //
 //  UIImageView+loadURL.swift
-//  CaseyImageView
+//  CaseyImageView: swift 图片加载工具
 //
 //  Created by Casey on 20/11/2018.
 //  Copyright © 2018 Casey. All rights reserved.
@@ -21,12 +21,17 @@ extension UIImageView {
     
     
     
-    func imageWithUrl(_ urlStr:String, _ placeholder:UIImage? = nil)  {
+    func imageWithUrl(_ urlStr:String?, _ placeholder:UIImage? = nil)  {
         
         if let defalutImage = placeholder {
             self.image = defalutImage
         }
-        
+      
+      if urlStr == nil {
+        print("图片url地址为nil")
+        return
+      }
+      
         self.imageURLString = urlStr
         
         let operation = ImageLoadOperation()

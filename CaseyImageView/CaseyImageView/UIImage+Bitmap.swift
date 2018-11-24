@@ -19,13 +19,10 @@ public extension Data {
         
         if let cgImage = UIImage.init(data: self)?.cgImage{
             
-            
-            let colorSpace =  cgImage.colorSpaceBitmap()
-            let context =  CGContext.init(data: nil, width: cgImage.width, height: cgImage.height, bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: cgImage.bytesPerRow, space: colorSpace, bitmapInfo: cgImage.bitmapInfo.rawValue)
-            
+            let colorSpace = cgImage.colorSpaceBitmap()
+            let context =  CGContext.init(data: nil, width: cgImage.width, height: cgImage.height, bitsPerComponent: cgImage.bitsPerComponent, bytesPerRow: cgImage.bytesPerRow, space: colorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue | CGImageByteOrderInfo.orderDefault.rawValue)
             
             context?.draw(cgImage, in: CGRect.init(x: 0, y: 0, width: cgImage.width, height: cgImage.height))
-            
             if let bitmapOfCGImage =  context?.makeImage(){
                 
                 return UIImage.init(cgImage: bitmapOfCGImage)
@@ -48,7 +45,7 @@ public extension UIImage {
     
     public func bitmapFormat() -> UIImage? {
         
-        if let imageData = self.pngData() {
+      if let imageData = self.pngData() {
         
             return imageData.bitmapImageDataFormat()
             

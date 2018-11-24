@@ -201,6 +201,7 @@ class ImageLoadOperation: Operation {
     
     fileprivate func getImageDataFromCache() -> Data? {
         
+        return nil
         let imageKey = urlStr!.encodeUrlKey()
         
         
