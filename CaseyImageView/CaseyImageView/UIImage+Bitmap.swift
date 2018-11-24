@@ -10,7 +10,7 @@
 import UIKit
 import CoreGraphics
 import CoreFoundation
-
+import CommonCrypto
 
 public extension Data {
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CommonCrypto
 
 fileprivate typealias CancelOperation = () -> Bool
 
@@ -201,10 +202,7 @@ class ImageLoadOperation: Operation {
     
     fileprivate func getImageDataFromCache() -> Data? {
         
-        return nil
         let imageKey = urlStr!.encodeUrlKey()
-        
-        
         if let imageData = ImageLoadOperation.__imageCache.object(forKey: imageKey as AnyObject) {
             
             return imageData as? Data
@@ -231,18 +229,34 @@ class ImageLoadOperation: Operation {
 
 }
 
-extension String {
+fileprivate extension String {
     
     
     func encodeUrlKey() -> String {
         
-        var targetStr = self.replacingOccurrences(of: "http://", with: "")
-        targetStr = targetStr.replacingOccurrences(of: "https://", with: "")
-        targetStr = targetStr.replacingOccurrences(of: "/", with: "")
-        if targetStr.count > 10 {
-            
-        }
-        return targetStr
+        let md5Str = self.md5CaseyString()
+        return md5Str
     }
     
+    func md5CaseyString() -> String {
+        
+        
+        let str = self.cString(using: .utf8)
+        let strLen = CC_LONG(self.lengthOfBytes(using: .utf8))
+        let digestLen = Int(CC_MD5_DIGEST_LENGTH)
+        let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen);
+        
+        CC_MD5(str!, strLen, result);
+        
+        let hash = NSMutableString();
+        for i in 0 ..< digestLen {
+            hash.appendFormat("%02x", result[i]);
+        }
+        result.deallocate()
+        
+        return String(format: hash as String)
+    }
+        
+    
+
 }
