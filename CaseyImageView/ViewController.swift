@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CommonCrypto
 
 /*
  https://a06mobileimage.cnsupu.com/style/A06M/_default/__static/__images/brand/brand1.jpg
@@ -70,4 +71,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
 }
+
+
 
