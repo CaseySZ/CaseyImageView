@@ -116,7 +116,15 @@ class ImageLoadOperation: Operation {
         
         if let imageData = loadImageViewSynNet() {
         
-            if  let bitmapImage = imageData.bitmapImageDataFormat() {
+            let image =  UIImage.init(data: imageData)
+            var decodeImage:UIImage?
+            if image?.shouldDecodeImage() ?? false {
+                decodeImage = image?.bitmapFormat()
+            }else{
+                decodeImage = image
+            }
+            
+            if  let bitmapImage = decodeImage {
                 
                 saveImageDataToCache(image: bitmapImage)
                 
